@@ -7,17 +7,14 @@ type User {
     dni: Int!
     status: String
     account: EVMAccountAddress!
-    contracts: [Contract!]! @relation(type: REFERENCES)
+    contracts: Contract @embedded
 }
 
 type Contract {
-    id: UUID!
     name: String!
-    madeOn: DateTime!
     price: Int!
     transactionHash: String
     file: Url!
-    owner: User! @belongsTo(via: "contracts")
 }
 
 type Address {
