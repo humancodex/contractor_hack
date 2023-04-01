@@ -1,22 +1,29 @@
-type User @storage (name:"Polygon PoS"){
-id: UUID!
-fullName: String
-email:Email!
-address:Address!
-number:Int!
-dni:Int!
-status:String  
-account:EVMAccountAddress!
-contracts: [Contract!]!@relation(type: REFERENCE)
+type User {
+    id: UUID!
+    fullName: String
+    email: String!
+    address: Address! @embedded
+    number: Int!
+    dni: Int!
+    status: String
+    account: EVMAccountAddress!
+    contracts: [Contract!]! @relation(type: REFERENCES)
 }
 
-type Contract@storage(name:"IPFS")@ERC721 (network: "Polygon PoS")
-{
-id: UUID!
-name:String!
-madeOn: DateTime!
-price:Int!
-transactionHash: ver dato
-file: Url!
-owner: User! @belongsTo@owner(address: "address")
+type Contract {
+    id: UUID!
+    name: String!
+    madeOn: DateTime!
+    price: Int!
+    transactionHash: String
+    file: Url!
+    owner: User! @belongsTo(via: "contracts")
+}
+
+type Address {
+    streetName: String!
+    streetNumber: String!
+    city: String!
+    state: String!
+    zipCode: Int!
 }
