@@ -1,0 +1,22 @@
+type User @storage (name:"Polygon PoS"){
+id: UUID!
+fullName: String
+email:Email!
+address:Address!
+number:Int!
+dni:Int!
+status:String  
+account:EVMAccountAddress!
+contracts: [Contract!]!@relation(type: REFERENCE)
+}
+
+type Contract@storage(name:"IPFS")@ERC721 (network: "Polygon PoS")
+{
+id: UUID!
+name:String!
+madeOn: DateTime!
+price:Int!
+transactionHash: ver dato
+file: Url!
+owner: User! @belongsTo@owner(address: "address")
+}
